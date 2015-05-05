@@ -1,7 +1,7 @@
 /**
  * This module deals with all the routing
  */
-var controller = require('./controller');
+var controller = require('./controllers');
 
 module.exports = function (app) {
 	

@@ -1,3 +1,8 @@
+/**
+ * This module defines the user schema that lives in MongoDB
+ * @author TakLee96
+ */
+
 var mongoose = require('mongoose');
 
 var UserSchema = mongoose.Schema({

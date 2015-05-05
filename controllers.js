@@ -7,12 +7,13 @@ var mongoose = require('mongoose');
 var crypto = require('crypto');
 
 var hash = require('./util/hash');
-var User = require('./model');
+var User = require('./models');
 
 var controller = {};
 
 /**
  * Check the availability of userid
+ * GET /users/:userid
  * @param req --- request object
  * @param res --- response object
  * @param next --- next middleware
@@ -26,7 +27,7 @@ exports.isAvailable = function (req, res, next) {
            res.status(302).json({available: false});
            res.end();
        } else {
-           res.status(200).json({avaibable: true});
+           res.status(200).json({available: true});
            res.end();
        }
     });
@@ -34,6 +35,7 @@ exports.isAvailable = function (req, res, next) {
 
 /**
  * Create the user and respond
+ * POST /users
  * @param req --- request object
  * @param res --- response object
  * @param next --- next middleware
@@ -53,6 +55,7 @@ exports.create = function (req, res, next) {
                     next(err);
                 } else {
                     // Advanced stuff
+                    // TODO
                 }
             });
         }
@@ -61,6 +64,7 @@ exports.create = function (req, res, next) {
 
 /**
  * Verify the password
+ * POST /users/:userid
  * @param req --- request object
  * @param res --- response object
  */

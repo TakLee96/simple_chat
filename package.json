@@ -23,7 +23,9 @@
   "homepage": "https://github.com/TakLee96/user_login",
   "dependencies": {
     "body-parser": "^1.12.3",
+    "connect-mongo": "^0.8.1",
     "express": "^4.12.3",
+    "express-session": "^1.11.1",
     "mongoose": "^4.0.2"
   }
 }
