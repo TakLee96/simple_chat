@@ -38,7 +38,7 @@ module.exports = function (app) {
 							} else {
 								req.session.isLoggedIn = true;
 								req.session.userid = user._id;
-								console.log("[MongoDB] Created user: %s", user._id);
+								console.log("[MongoDB] Created user: %s\n", user._id);
 								res.redirect('/');
 							}
 						});

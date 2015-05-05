@@ -8,11 +8,15 @@ html
 		header
 			h1= pageTitle
 		section#status
+			ul
 			if session.isLoggedIn
-				a(href="/logout") Logout
+				li
+					a(href="/logout") Logout
 			else
-				a(href="/login") Login
-				a(href="/signup") Signup
+				li
+					a(href="/login") Login
+				li
+					a(href="/signup") Signup
 		section#content
 			block content
 		script(src='js/main.js')

@@ -15,12 +15,14 @@ module.exports = function (app) {
 	app.use(bodyParser.json());
 	app.use(bodyParser.urlencoded({ extended: true }));
 	
-	app.use({
+	app.use(session({
 		secret: 'user_login',
 		store: new MongoStore({mongooseConnection: mongoose.connection}),
-		ttl: 7 * 24 * 60 * 60,  // 7 days (default is 14 days)
-		autoRemove: 'native'    // default
-	});
+		ttl: 60 * 60,  // 1 hour (default is 14 days)
+		autoRemove: 'native',   // default
+		resave: true,
+		saveUninitialized: true
+	}));
 	
 	app.use(function (req, res, next) {
 		res.locals.session = req.session;
