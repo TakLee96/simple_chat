@@ -1,0 +1,23 @@
+extends layout
+
+block content
+	form(method='POST', action='/signup')
+		h2 Sign Up
+		if exists
+			.error
+				| That user already exists! Are you trying to
+				a(href='/login') Login
+				| ?
+		if invalid
+			.error Invalid Email
+		ul
+			li
+				label(for='_id') Username
+				input#_id(name='_id')
+			li
+				label(for='email') Email
+				input#email(name='email')
+			li
+				label(for='pass') Password
+				input#pass(name='pass', type='password')
+		input(type='submit', value='Sign Up')

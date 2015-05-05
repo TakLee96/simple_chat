@@ -9,7 +9,7 @@ module.exports = function (app) {
 	});
 
 	app.use(function (err, req, res, next) {
-		console.log("[Server] Error occurred: %s", error.stack);
+		console.log("[Server] Error occurred: %s", err.stack);
 		res.status(500).end("Oops... The programmer screws up something!");
 	});
 };

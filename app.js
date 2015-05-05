@@ -1,6 +1,8 @@
 /// <reference path="typings/node/node.d.ts"/>
 /**
- * The entry point of the project
+ * The entry point of the project user_login
+ * The project uses MongoDB to store user information and session information
+ * and uses Jade to render the front end page
  * @author TakLee96
  */
 

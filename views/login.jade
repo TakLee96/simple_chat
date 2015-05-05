@@ -1,0 +1,20 @@
+extends layout
+
+block content
+	form(method='POST', action='/login')
+		h2 Log In
+		if empty
+			.error Empty Username/Password!
+		if incorrect
+			.error Wrong Password!
+		if notExists
+			.error User does not exists!
+		ul
+			li
+				label(for='_id') Username
+				input#_id(name='_id')
+			li
+				label(for='pass') Password
+				input#pass(name='pass', type='password')
+		input(type='submit', value='Log In')
+	

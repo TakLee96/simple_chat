@@ -1,0 +1,7 @@
+extends layout
+
+block content
+	if session.isLoggedIn
+		p You are logged in! Welcome #{session.userid}
+	else
+		p You are not logged in! Welcome guest!

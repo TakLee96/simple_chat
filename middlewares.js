@@ -14,11 +14,16 @@ module.exports = function (app) {
 	app.use(logger());
 	app.use(bodyParser.json());
 	app.use(bodyParser.urlencoded({ extended: true }));
+	
 	app.use({
 		secret: 'user_login',
 		store: new MongoStore({mongooseConnection: mongoose.connection}),
 		ttl: 7 * 24 * 60 * 60,  // 7 days (default is 14 days)
 		autoRemove: 'native'    // default
 	});
-	app.use(express.static('public')); // might not be appropriate
+	
+	app.use(function (req, res, next) {
+		res.locals.session = req.session;
+		next();
+	});
 };
