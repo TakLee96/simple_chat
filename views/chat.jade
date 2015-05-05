@@ -1,0 +1,24 @@
+extends layout
+
+block content
+	if session.isLoggedIn
+		h2 Chat ##{session.chatid}
+		ul#messages
+			each message in (messages || [])
+				if message.sender === session.userid
+					li.msg.send Me: #{message.msg} [#{message.date}]
+				else
+					li.msg.receive #{message.sender}: #{message.msg} [#{message.date}]
+		input#msg
+		button#send Send
+		script(src='https://cdn.socket.io/socket.io-1.3.5.js')
+		script(src='http://code.jquery.com/jquery-2.1.3.min.js')
+		script= "var userid = '" + session.userid + "'; var chatid = '" + session.chatid + "';"
+		script
+			include js/main.js
+	else
+		h2
+			| You are not logged in, please 
+			a(href='/login') log in
+			| !
+			

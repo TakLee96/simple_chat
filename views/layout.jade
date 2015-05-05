@@ -3,7 +3,8 @@ html5
 html
 	head
 		title= pageTitle
-		link(rel="stylesheet" type="text/css" href="css/main.css")
+		style
+			include css/main.css
 	body
 		header
 			h1= pageTitle
@@ -19,4 +20,3 @@ html
 					a(href="/signup") Signup
 		section#content
 			block content
-		script(src='js/main.js')

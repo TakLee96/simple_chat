@@ -8,6 +8,7 @@
 
 /** require necessary modules */
 var express = require('express');
+var http = require('http');
 var mongoose = require('mongoose');
 
 /** make connection to MongoDB */
@@ -17,6 +18,10 @@ mongoose.connect("mongodb://localhost/user_login", function (err) {
 	} else {
 		/** instantiate express app */
 		var app = express();
+		var server = http.createServer(app);
+		
+		/** establish socket.io connection */
+		require('./socket')(server);
 		
 		/** use all necessary middlewares */
 		require('./middlewares')(app);
@@ -28,7 +33,7 @@ mongoose.connect("mongodb://localhost/user_login", function (err) {
 		require('./errors')(app);
 		
 		/** launch the express app */
-		app.listen(process.env.PORT || 8080, function () {
+		server.listen(process.env.PORT || 8080, function () {
 			console.log("[Server] Listening on port %s", this.address().port);
 		});	
 	}

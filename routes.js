@@ -4,15 +4,19 @@
 
 var express = require('express');
 var mongoose = require('mongoose');
-var User = require('./models');
+var models = require('./models');
+var User = models.User;
+var Chat = models.Chat;
 var invalid = require('./util/invalid');
 var crypto = require('crypto');
 var hash = require('./util/hash')
+var async = require('async')
 
 module.exports = function (app) {
 	
+	/** Signup Routing */
 	app.get('/signup', function (req, res) {
-		res.render('signup.jade');
+		res.render('signup.jade', {pageTitle: 'Sign Up'});
 	});
 	app.post('/signup', function (req, res, next) {
 		User.findOne({'_id': req.body._id}, function (err, user) {
@@ -48,8 +52,9 @@ module.exports = function (app) {
 		})
 	});
 	
+	/** Login Routing */
 	app.get('/login', function (req, res) {
-		res.render('login.jade');
+		res.render('login.jade', {pageTitle: 'Log In'});
 	});
 	app.post('/login', function (req, res, next) {
 		if (req.body._id && req.body.pass) {
@@ -74,16 +79,93 @@ module.exports = function (app) {
 		}
 	});
 	
-	app.get('/', function (req, res) {
-		res.render('home.jade');
+	/** Homepage Routing */
+	app.get('/', function (req, res, next) {
+		if (req.session.isLoggedIn) {
+			User.findOne({'_id': req.session.userid}, function (err, user) {
+				if (err) {
+					next(err);
+				} else {
+					res.render('home.jade', {chatids: user.chat, pageTitle: 'Home'});
+				}
+			});
+		} else {
+			res.render('home.jade');
+		}
 	});
 	
+	/** Logout Routing */
 	app.get('/logout', function (req, res) {
 		req.session.isLoggedIn = false;
 		req.session.userid = null;
 		res.redirect('/');
 	});
 	
+	/** Chat Routing */
+	app.get('/chat/:chatid', function (req, res, next) {
+		if (req.session.isLoggedIn) {
+			req.session.chatid = req.params.chatid;
+			Chat.findOne({'_id': req.params.chatid}, function (err, chat) {
+				if (err) {
+					next(err);
+				} else {
+					res.render('chat.jade', {messages: chat.messages, pageTitle: 'Chat'});
+				}
+			});	
+		} else {
+			res.render('chat.jade');
+		}
+	}); 
+	 
+	app.post('/chat', function (req, res, next) {
+		if (req.body.receivers) {
+			var members = req.body.receivers.split(',');
+			for (var i = 0; i < members.length; i++) {
+				members[i] = members[i].trim();
+			}
+			async.map(members, function (member, callback) {
+				User.findOne({'_id': member}, callback);
+			}, function (err, users) {
+				if (err) {
+					next(err);
+				} else {
+					for (var i = 0; i < users.length; i++) {
+						if (!users[i]) {
+							return res.render('home.jade', {notExist: true});
+						}
+						if (users[i]._id === req.session.userid) {
+							return res.render('home.jade', {selfError: true});
+						}
+					}
+					members.push(req.session.userid);
+					var chat = new Chat({
+						messages: [],
+						members: members
+					});
+					chat.save(function (err, new_chat) {
+						if (err) {
+							next(err);
+						} else {
+							console.log("[MongoDB] new chat created: %s\n", new_chat._id);
+							async.map(members, function (member, callback) {
+								User.findOneAndUpdate({'_id': member}, {
+									'$push': {chat: new_chat._id}
+								}, callback);
+							}, function (err, users) {
+								if (err) {
+									next(err);
+								} else {
+									res.redirect('/chat/' + new_chat._id);
+								}
+							});
+						}
+					});
+				}
+			});
+		}
+	});
+	
+	/** Default Routing */
 	app.use(express.static(__dirname));
 	
 };

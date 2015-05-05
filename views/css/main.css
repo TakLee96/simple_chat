@@ -1,0 +1,26 @@
+.error {
+	color: red;
+}
+
+.msg {
+	color: white;
+}
+
+.send {
+	background-color: green;
+}
+
+.receive {
+	background-color: blue;
+}
+
+/**
+ * #status {}
+ * #content {}
+ * #_id {}
+ * #pass {}
+ * #email {}
+ * #msg {}
+ * #send {}
+ * #messages {}
+ */
