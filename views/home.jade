@@ -1,21 +1,21 @@
 extends layout
 
 block content
-	if session.isLoggedIn
-		p You are logged in! Welcome #{session.userid}
-		form(method='POST' action='/chat')
-			h2 New Chat
-			if notExist
-				.error That receiver does not exists!
-			if selfError
-				.error Cannot chat with yourself!
-			label(for='receivers') Receivers
-			input#receivers(name='receivers')
-			input(type='submit', value='Go!')
-		h2 Old Chats
-		ul
-			each chatid in (chatids || [])
-				li
-					a(href='/chat/' + chatid) Chat ##{chatid}
-	else
-		p You are not logged in! Welcome guest!
+    if session.isLoggedIn
+        p You are logged in! Welcome #{session.userid}
+        form(method='POST' action='/chat')
+            h2 New Chat
+            if notExist
+                .error That receiver does not exists!
+            if selfError
+                .error Cannot chat with yourself!
+            label(for='receivers') Receivers
+            input#receivers(name='receivers')
+            input(type='submit', value='Go!')
+        h2 Old Chats
+        ul
+            each chatid in (chatids || [])
+                li
+                    a(href='/chat/' + chatid) Chat ##{chatid}
+    else
+        p You are not logged in! Welcome guest!

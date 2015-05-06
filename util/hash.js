@@ -12,8 +12,8 @@ var crypto = require('crypto');
  * @return the hashed password with sha512 algorithm and base64 digest
  */
 module.exports = function (pass, salt) {
-	var hash = crypto.createHash('sha512');
-	hash.update(pass);
-	hash.update(salt);
-	return hash.digest('base64');
+    var hash = crypto.createHash('sha512');
+    hash.update(pass);
+    hash.update(salt);
+    return hash.digest('base64');
 }

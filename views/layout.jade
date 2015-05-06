@@ -1,22 +1,20 @@
-html5
-
 html
-	head
-		title= pageTitle
-		style
-			include css/main.css
-	body
-		header
-			h1= pageTitle
-		section#status
-			ul
-			if session.isLoggedIn
-				li
-					a(href="/logout") Logout
-			else
-				li
-					a(href="/login") Login
-				li
-					a(href="/signup") Signup
-		section#content
-			block content
+    head
+        title= pageTitle
+        style
+            include css/main.css
+    body
+        header
+            h1= pageTitle
+        section#status
+            ul
+            if session.isLoggedIn
+                li
+                    a(href="/logout") Logout
+            else
+                li
+                    a(href="/login") Login
+                li
+                    a(href="/signup") Signup
+        section#content
+            block content

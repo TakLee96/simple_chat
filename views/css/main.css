@@ -1,17 +1,22 @@
+/**
+ * Style Sheet for All Pages
+ * @author TakLee96
+ */
+
 .error {
-	color: red;
+    color: red;
 }
 
 .msg {
-	color: white;
+    color: white;
 }
 
 .send {
-	background-color: green;
+    background-color: green;
 }
 
 .receive {
-	background-color: blue;
+    background-color: blue;
 }
 
 /**

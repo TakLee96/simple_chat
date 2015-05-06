@@ -1,6 +1,15 @@
-# user_login
+# Simple Chat
 Standard Node.js + Express.js + MongoDB User Login Service
 
 ## improvement plan
-- what is **session**, and how to use it effectively
-- what is **jade**, and how to use jade together with express
+- Debug
+
+```js
+async.map(members, function (member, callback) {
+    User.findOne({'_id': member}, callback);
+}, function (err, users) {
+    users.forEach(function (user) {
+        console.log(user);
+    });
+});
+```
