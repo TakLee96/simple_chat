@@ -12,7 +12,9 @@ var http = require('http');
 var mongoose = require('mongoose');
 
 /** make connection to MongoDB */
-mongoose.connect("mongodb://localhost/user_login", function (err) {
+var mongolab = "mongodb://heroku_app36574142:ujf3e0bl6iarapciocuodio7q3@ds031842.mongolab.com:31842/heroku_app36574142";
+var local = "mongodb://localhost/user_login";
+mongoose.connect(mongolab, function (err) {
 	if (err) {
 		console.log("[MongoDB] Error connecting to MongoDB: %s", JSON.stringify(err));
 	} else {
